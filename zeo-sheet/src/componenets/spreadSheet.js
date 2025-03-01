@@ -1,21 +1,39 @@
+import '../styleSheets/spreadSheet.css';
 import { HotTable } from '@handsontable/react-wrapper';
+import 'handsontable/dist/handsontable.full.min.css';
+import { registerAllModules } from 'handsontable/registry'; 
 
-const SpreadSheet = (props) =>{
+
+const generateData = () => {
+    const rows = 100;
+    const cols = 100; // 'A' to 'Z'
+    const data = [];
+
+    for (let i = 0; i < rows; i++) {
+        const row = [];
+        for (let j = 0; j < cols; j++) {
+            row.push('');
+        }
+        data.push(row);
+    }
+
+    return data;
+};
+
+const SpreadSheet = (props) => {
+    const data = generateData();
+
     return (
-        <div className="spread-sheet-flex ht-theme-main-dark-auto">
+        <div className="spread-sheet-flex">
             <HotTable
-                data={[
-                ['Tesla', 'Volvo', 'Toyota', 'Ford'],
-                ['2019', 10, 11, 12, 13],
-                ['2020', 20, 11, 14, 13],
-                ['2021', 30, 15, 12, 13]
-                ]}
-                rowHeaders={true}
+                data={data}
                 colHeaders={true}
-                height="auto"
-                autoWrapRow={true}
-                autoWrapCol={true}
-                licenseKey="non-commercial-and-evaluation" // for non-commercial use only
+                rowHeaders={true}
+                width="100%"
+                height="100%"
+                licenseKey="non-commercial-and-evaluation"
+                manualColumnResize={true} // Enable manual column resize
+                manualRowResize={true} // Enable manual row resize
             />
         </div>
     );
