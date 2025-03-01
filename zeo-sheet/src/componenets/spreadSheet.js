@@ -34,6 +34,7 @@ const SpreadSheet = (props) => {
                 licenseKey="non-commercial-and-evaluation"
                 manualColumnResize={true} // Enable manual column resize
                 manualRowResize={true} // Enable manual row resize
+                contextMenu={true} // Enable context menu
             />
         </div>
     );
