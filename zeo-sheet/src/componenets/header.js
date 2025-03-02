@@ -22,14 +22,6 @@ const Header = (props) =>{
                     </div>
                 </div>
             </div>
-            <div className = "row-2">
-                <button className = "btn">Search</button>
-                <button className = "btn">Undo</button>
-                <button className = "btn">Redo</button>
-                <button className = "btn">Print</button>
-                <button className = "btn">Zoom</button>
-                <button className = "btn">Math  tools</button>
-            </div>
         </div>
     );
 }
