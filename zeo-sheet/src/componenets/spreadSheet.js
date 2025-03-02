@@ -4,6 +4,12 @@ import 'handsontable/dist/handsontable.full.min.css';
 import { registerAllModules } from 'handsontable/registry'; 
 import { useCallback, useRef } from 'react';
 
+import HyperFormula from "hyperformula";
+// Initialize HyperFormula engine
+const hyperformulaInstance = HyperFormula.buildEmpty({
+    licenseKey: "internal-use-in-handsontable",
+});
+
 const generateData = () => {
     const rows = 100;
     const cols = 100; // 'A' to 'Z'
@@ -143,6 +149,32 @@ const decreaseFontSize = (hotRef) => (event) => {
     }
 };
 
+
+const addFormual = (hotRef) => (event) => {
+    const hot = hotRef.current.hotInstance;
+    let selected = getSelection(hotRef, event);
+
+    if (selected && selected.length === 1) {
+        const [startRow, startCol, endRow, endCol] = selected[0];
+        if (startRow === endRow && startCol === endCol) {
+            const formula = prompt("Enter the formula:", "=SUM(A1:C1)");
+            if (formula !== null) {
+                const isValid = hyperformulaInstance.validateFormula(formula, hot.getData());
+                if (isValid) {
+                    hot.setDataAtCell(startRow, startCol, formula);
+                    hot.render();
+                } else {
+                    alert("Invalid formula! Please enter a valid formula.");
+                }
+            }
+        } else {
+            alert("Multiple cells selected. Please select a single cell to add a formula.");
+        }
+    } else {
+        alert("No cells selected. Please select a single cell to add a formula.");
+    }
+}
+
 const SpreadSheet = (props) => {
     const data = generateData();
     const hotRef = useRef(null);
@@ -157,6 +189,7 @@ const SpreadSheet = (props) => {
                 <button className = "btn" onMouseDown={makeItalic(hotRef)}>Italic</button>
                 <button className="btn" onMouseDown={increaseFontSize(hotRef)}>Increase Font Size</button>
                 <button className="btn" onMouseDown={decreaseFontSize(hotRef)}>Decrease Font Size</button>
+                <button className="btn" onMouseDown={addFormual(hotRef)}>formula</button>
                 <button className = "btn">Print</button>
                 <button className = "btn">Zoom</button>
                 <button className = "btn">Math  tools</button>
@@ -174,6 +207,7 @@ const SpreadSheet = (props) => {
                 manualColumnResize={true} // Enable manual column resize
                 manualRowResize={true} // Enable manual row resize
                 contextMenu={true} // Enable context menu
+                formulas={{ engine: hyperformulaInstance }}
             />
         </div>
     );
