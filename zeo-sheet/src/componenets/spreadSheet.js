@@ -92,10 +92,10 @@ const highLightIt = (hotRef) => (event) => {
             for (let row = startRow; row <= endRow; row++) {
                 for (let col = startCol; col <= endCol; col++) {
                     const currentClassName = hot.getCellMeta(row, col).className;
-                    if (currentClassName && currentClassName.includes('highlight')) {
-                        hot.setCellMeta(row, col, 'className', currentClassName.replace('highlight', '').trim());
+                    if (currentClassName && currentClassName.includes('makeRed')) {
+                        hot.setCellMeta(row, col, 'className', currentClassName.replace('makeRed', '').trim());
                     } else {
-                        hot.setCellMeta(row, col, 'className', (currentClassName ? currentClassName + ' ' : '') + 'highlight');
+                        hot.setCellMeta(row, col, 'className', (currentClassName ? currentClassName + ' ' : '') + 'makeRed');
                     }
                 }
             }
