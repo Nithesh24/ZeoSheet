@@ -117,6 +117,12 @@ Using formatting feature to format data
 
 This project is licensed under the **MIT License**.
 
+## Contact
+
+For any queries, reach out via:
+- **Email**: nithesh487@gmail.com
+- **LinkedIn**: [@nitheskumar24](https://linkedin.com/in/nitheskumar24)
+
 ---
 
 **Happy Hacking!** 🚀
