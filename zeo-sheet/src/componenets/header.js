@@ -1,7 +1,7 @@
 import "../styleSheets/header.css";
 
 //images
-import logo from "../assets/zeoTapLogo.png";
+import logo from "../assets/logo.png";
 
 const Header = (props) =>{
     return(
@@ -11,7 +11,7 @@ const Header = (props) =>{
                     <img src = {logo} alt = {props.logoAlt} />
                 </div>
                 <div className = "row-1-col-2">
-                    <div className = "row-1-col-2-row-1">File Name</div>
+                    <div className = "row-1-col-2-row-1">Zeo Sheet</div>
                     <div className = "row-1-col-2-row-2">
                         <button className = "btn">File</button>
                         <button className = "btn">Edit</button>

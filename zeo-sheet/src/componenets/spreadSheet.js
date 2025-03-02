@@ -83,6 +83,31 @@ const makeItalic = (hotRef) => (event) => {
     }
 };
 
+const highLightIt = (hotRef) => (event) => {
+    let selected = getSelection(hotRef, event);
+
+    if (selected) {
+        const hot = hotRef.current.hotInstance;
+        selected.forEach(([startRow, startCol, endRow, endCol]) => {
+            for (let row = startRow; row <= endRow; row++) {
+                for (let col = startCol; col <= endCol; col++) {
+                    const currentClassName = hot.getCellMeta(row, col).className;
+                    if (currentClassName && currentClassName.includes('highlight')) {
+                        hot.setCellMeta(row, col, 'className', currentClassName.replace('highlight', '').trim());
+                    } else {
+                        hot.setCellMeta(row, col, 'className', (currentClassName ? currentClassName + ' ' : '') + 'highlight');
+                    }
+                }
+            }
+        });
+        hot.render(); // Re-render the table to apply the changes
+        // Reapply the selection
+        setTimeout(() => {
+            hot.selectCells(selected);
+        }, 0);
+    }
+};
+
 const increaseFontSize = (hotRef) => (event) => {
     let selected = getSelection(hotRef, event);
 
@@ -175,6 +200,34 @@ const addFormual = (hotRef) => (event) => {
     }
 }
 
+const downlaodTable = (hotRef) => (event) => {
+    const hot = hotRef.current.hotInstance;
+    const data = hot.getData(); // Get all table data
+
+    let csvContent = "data:text/csv;charset=utf-8,";
+
+    data.forEach(row => {
+        csvContent += row.map(value => `"${value}"`).join(",") + "\n";
+    });
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "zeoSheet.csv");
+    document.body.appendChild(link);
+    link.click();
+}
+
+const handleUndo = (hotRef) => (event) => {
+    const hot = hotRef.current.hotInstance;
+    if (hot) hot.undo();
+};
+
+const handleRedo = (hotRef) => (event) => {
+    const hot = hotRef.current.hotInstance;
+    if (hot) hot.redo();
+};
+
 const SpreadSheet = (props) => {
     const data = generateData();
     const hotRef = useRef(null);
@@ -182,17 +235,15 @@ const SpreadSheet = (props) => {
     return (
         <div className="spread-sheet-flex">
             <div className = "tool-bar">
-                <button className = "btn">Search</button>
-                <button className = "btn">Undo</button>
-                <button className = "btn">Redo</button>
+                <button className = "btn" onClick={handleUndo(hotRef)}>Undo</button>
+                <button className = "btn"onClick={handleRedo(hotRef)}>Redo</button>
                 <button className = "btn" onMouseDown={makeBold(hotRef)}>Bold</button>
                 <button className = "btn" onMouseDown={makeItalic(hotRef)}>Italic</button>
                 <button className="btn" onMouseDown={increaseFontSize(hotRef)}>Increase Font Size</button>
                 <button className="btn" onMouseDown={decreaseFontSize(hotRef)}>Decrease Font Size</button>
                 <button className="btn" onMouseDown={addFormual(hotRef)}>formula</button>
-                <button className = "btn">Print</button>
-                <button className = "btn">Zoom</button>
-                <button className = "btn">Math  tools</button>
+                <button className = "btn" onMouseDown={highLightIt(hotRef)}>Highlight</button>
+                <button className = "btn" onClick={downlaodTable(hotRef)}>Download</button>
             </div>
 
 

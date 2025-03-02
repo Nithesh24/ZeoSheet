@@ -1,15 +1,42 @@
+:root {
+    --primary-blue: #0074e0;   /* Vibrant Blue */
+    --secondary-blue: #005bb5; /* Deeper Blue */
+    --accent-purple: #6f42c1;  /* Rich Purple */
+    --light-purple: #a488d9;   /* Soft Lavender */
+    --background-light: #f4f5f7; /* Light Grey */
+    --text-dark: #1a1a1a;      /* Almost Black */
+    --text-light: #ffffff;     /* Pure White */
+}
+
+body {
+    background-color: var(--background-light);
+    color: var(--text-dark);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 .spread-sheet-flex {
     display: flex;
     flex: 1;
     flex-direction: column;
     overflow: auto;
-    height: 80vh;
+    height: 90vh; /* Adjust 60px to the height of your header if any */
+    background-color: var(--background-light);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .tool-bar {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    padding: 0.5em;
+    padding-top : 0;
+    border-radius: 10px;
 }
 
 .bold {
@@ -18,6 +45,10 @@
 
 .italic {
     font-style: italic;
+}
+
+.highlight{
+    color : red !important;
 }
 
 /* font size classes */
@@ -44,3 +75,55 @@
 .font-size-32 {
     font-size: 32px !important;
 }
+
+/* button styling */
+.btn {
+    background-color: rgba(0, 116, 224, 0.8); /* Translucent primary blue */
+    color: var(--text-light);
+    padding: .5em 1em;
+    margin: .2em .3em; /* Reduced margin between buttons */
+    border-radius: 25px;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: rgba(0, 116, 224, 1); /* Fully opaque on hover */
+    transform: scale(1.05);
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.header {
+    background-color: var(--secondary-blue);
+    color: var(--text-light);
+    padding: 1em;
+    border-radius: 10px;
+    margin-bottom: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header img {
+    height: 40px;
+}
+
+.header .file-name-input {
+    background-color: var(--light-purple);
+    border: none;
+    border-radius: 5px;
+    padding: 0.5em;
+    color: var(--text-light);
+    font-size: 1em;
+    margin-left: 1em;
+}
+
+.header .file-name-input:focus {
+    outline: none;
+    box-shadow: 0 0 5px var(--accent-purple);
+}
+
