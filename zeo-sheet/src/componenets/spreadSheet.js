@@ -174,6 +174,51 @@ const decreaseFontSize = (hotRef) => (event) => {
     }
 };
 
+const toUpperCase = (hotRef) => (event) => {
+    let selected = getSelection(hotRef, event);
+
+    if (selected) {
+        const hot = hotRef.current.hotInstance;
+        selected.forEach(([startRow, startCol, endRow, endCol]) => {
+            for (let row = startRow; row <= endRow; row++) {
+                for (let col = startCol; col <= endCol; col++) {
+                    const cellValue = hot.getDataAtCell(row, col);
+                    if (typeof cellValue === 'string') {
+                        hot.setDataAtCell(row, col, cellValue.toUpperCase());
+                    }
+                }
+            }
+        });
+        hot.render(); // Re-render the table to apply the changes
+        // Reapply the selection
+        setTimeout(() => {
+            hot.selectCells(selected);
+        }, 0);
+    }
+};
+
+const toLowerCase = (hotRef) => (event) => {
+    let selected = getSelection(hotRef, event);
+
+    if (selected) {
+        const hot = hotRef.current.hotInstance;
+        selected.forEach(([startRow, startCol, endRow, endCol]) => {
+            for (let row = startRow; row <= endRow; row++) {
+                for (let col = startCol; col <= endCol; col++) {
+                    const cellValue = hot.getDataAtCell(row, col);
+                    if (typeof cellValue === 'string') {
+                        hot.setDataAtCell(row, col, cellValue.toLowerCase());
+                    }
+                }
+            }
+        });
+        hot.render(); // Re-render the table to apply the changes
+        // Reapply the selection
+        setTimeout(() => {
+            hot.selectCells(selected);
+        }, 0);
+    }
+};
 
 const addFormual = (hotRef) => (event) => {
     const hot = hotRef.current.hotInstance;
@@ -243,6 +288,8 @@ const SpreadSheet = (props) => {
                 <button className="btn" onMouseDown={decreaseFontSize(hotRef)}>Decrease Font Size</button>
                 <button className="btn" onMouseDown={addFormual(hotRef)}>formula</button>
                 <button className = "btn" onMouseDown={highLightIt(hotRef)}>Highlight</button>
+                <button className="btn" onMouseDown={toUpperCase(hotRef)}>Upper</button>
+                <button className="btn" onMouseDown={toLowerCase(hotRef)}>Lower</button>
                 <button className = "btn" onClick={downlaodTable(hotRef)}>Download</button>
             </div>
 
